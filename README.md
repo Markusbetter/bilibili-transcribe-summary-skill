@@ -4,7 +4,7 @@
 
 ## English
 
-This repository contains a portable Bilibili video transcript and summary sill
+This repository contains a portable Bilibili video transcript and summary skill that can be used for Codex, Cursor-style agents, Claude Code, and OpenClaw.
 
 ### What it does
 
@@ -18,12 +18,25 @@ This repository contains a portable Bilibili video transcript and summary sill
 - Defaults to a key-point summary if the user gives no special instructions
 - Prints transcript text to stdout when available, so callers do not need an extra file-read step
 
-### Directory layout
 
-- `skill/bilibili-transcribe-summary/`: Codex or Cursor style general version
-- `skill/bilibili-transcribe-summary-ClaudeClaude/`: Claude Code version
-- `skill/bilibili-transcribe-summary-openclaw/`: OpenClaw Chinese version
-- `skill/bilibili-transcribe-summary-forme/`: personal version with easier local API-key options and no repeated pre-check reminders
+### Installation
+
+####  general usage
+
+1. Copy the entire `bilibili-transcribe-summary` folder into your tool's skills directory.
+2. Keep the internal structure unchanged, especially `SKILL.md`, `scripts/`, and `references/`.
+3. If your tool supports project-local skills, you can also keep this folder inside your repository and load it from there.
+
+Typical target layout:
+
+```text
+<skills-root>/
+  bilibili-transcribe-summary/
+    SKILL.md
+    scripts/
+    references/
+```
+
 
 ### First-run readiness marker for shared versions
 
@@ -45,7 +58,7 @@ node scripts/bilibili_pipeline.mjs run "https://b23.tv/lsocHNd" --output-dir ./o
 
 - Node.js 18+
 - Network access
-- SiliconFlow API key when subtitle fallback to ASR is needed（ free to ues,no need to pay）
+- SiliconFlow API key when subtitle fallback to ASR is needed （The ASR model is free to ues.）
 
 Create an API key here:
 
@@ -53,18 +66,18 @@ Create an API key here:
 
 ### Notes
 
-- This skill has been verified with both full Bilibili links and `b23.tv` short links.
+- This workflow has been verified with both full Bilibili links and `b23.tv` short links.
 - In the validated setup, renaming the downloaded `.m4s` audio file to `.mp3` was sufficient for SiliconFlow transcription, so no transcoding step was required.
 - Anonymous access is opportunistic and may fail for some videos.
 
 ## 中文说明
 
-本项目提供了一套可移植的 B 站视频转录与总结的skill，全流程免费，不用折腾部署大模型，可用于 Codex、Claude Code 和 OpenClaw。
+本项目提供了一套可移植的 B 站视频转录与总结 skill，整体方法免费可用，无需下载本地模型，可用于 Codex、Cursor、Claude Code 和 OpenClaw。
 
 ### 功能说明
 
 - 识别 B 站标准视频链接、BV 号和 `b23.tv` 短链接
-- 会检查本机是否安装 Node.js 18+
+- 该版本会检查本机是否安装 Node.js 18+
 - 优先尝试官方字幕
 - 如果没有字幕，则从页面播放信息中提取匿名音频地址
 - 下载得到 `.m4s` 后直接改名为 `.mp3`，不进行转码
@@ -74,10 +87,27 @@ Create an API key here:
 - 成功拿到文字稿时会直接输出到 stdout，不必再额外读取 txt 文件
 
 
+### 安装方式
+
+#### Codex / Cursor 通用版本
+
+1. 把整个 `bilibili-transcribe-summary` 文件夹复制到你的 skills 目录中。
+2. 保持内部结构不变，尤其是 `SKILL.md`、`scripts/`、`references/`。
+3. 如果你的工具支持项目内本地 skill，也可以直接把这个文件夹放在仓库里使用。
+
+目标结构一般像这样：
+
+```text
+<skills-root>/
+  bilibili-transcribe-summary/
+    SKILL.md
+    scripts/
+    references/
+```
 
 ### 首次成功标记
 
-版本现在会在输出目录写入 `.skill-ready.json`。
+该skill会在输出目录写入 `.skill-ready.json`。
 
 这个文件的作用是减少重复提示：
 
@@ -96,9 +126,9 @@ node scripts/bilibili_pipeline.mjs run "https://b23.tv/lsocHNd" --output-dir ./o
 
 - Node.js 18+
 - 可联网环境
-- 在字幕不可用、需要 ASR 时，需要硅基流动 API key(目前使用是免费的)
+- 在字幕不可用、需要 ASR 时，需要硅基流动 API key
 
-获取 API key 的地址：
+获取 API key 的地址（免费的模型），获取apikey就好：
 
 - https://cloud.siliconflow.cn/me/account/ak
 
